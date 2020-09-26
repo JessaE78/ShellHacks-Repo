@@ -10,17 +10,15 @@ from google.cloud import vision
 from google.cloud.vision import types
 from googletrans import Translator
 
-
 translator = Translator()
 #sets up GOOGLE_APPLICATION_CREDENTIALS 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'shell_hacks.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'menuTranslatorAuthentication.json'
 
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
 
 # The name of the image file to annotate
-file_name = os.path.abspath('wakeupcat.jpg')
-text =open("test.txt","w")
+file_name = os.path.abspath('resources/menu_test_1.jpg')
 
 # Loads the image into memory
 with io.open(file_name, 'rb') as image_file:
@@ -32,28 +30,34 @@ image = types.Image(content=content)
 response = client.label_detection(image=image)
 labels = response.label_annotations
 
-print('Labels:')
-for label in labels:
-    print(label.description)
-    text.write(label.description + "\n")
+text_response = client.text_detection(image=image)
+text_anno = text_response.text_annotations
+locale = text_anno[0].locale
+separated_text = text_anno[0].description.split('\n')
+separated_text.pop()
 
-text = open("test.txt","r")
+temp_counter = 1
+text_dict = {}
+#for text in separated_text:
 
-print('\n')
-print('Translated Version: ')
-text_contents = text.read()
-translated_version = translator.translate(text_contents, dest ='spanish')
-print(translated_version.text)
-
-image = Image.open('wakeupcat.jpg')
-#Download a font to use
-
-cropped_image = image.crop((30,390,580,470))
-blurred_image = cropped_image.filter(ImageFilter.GaussianBlur(radius=8))
-image.paste(blurred_image,(30,390,580,470))
-
-font_type = ImageFont.truetype('Arial Bold.ttf', 48)
-
+image = Image.open('resources/menu_test_1.jpg')
 draw = ImageDraw.Draw(image)
-draw.text(xy=(150,400),text="BIG FAT CAT", fill=(255,0,0),font=font_type)
+for text in separated_text:
+    text_len = len(text.split(' '))
+    text_dict[text] = temp_counter
+    temp_counter += text_len
+
+    print(text)
+    translated_text = translator.translate(text, src = locale, dest = 'es')
+    index = text_dict[text]
+    print(index)
+    verts_first_word = text_anno[index].bounding_poly.vertices
+    verts_last_word = text_anno[index + text_len - 1].bounding_poly.vertices
+
+    cropped_img = image.crop((verts_first_word[0].x,verts_first_word[0].y,verts_last_word[2].x,verts_last_word[2].y))
+    blurred_img = cropped_img.filter(ImageFilter.GaussianBlur(radius=8))
+    image.paste(blurred_img, (verts_first_word[0].x,verts_first_word[0].y,verts_last_word[2].x,verts_last_word[2].y))
+
+    font_type = ImageFont.truetype('fonts/times.ttf', verts_last_word[2].y - verts_first_word[0].y)
+    draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y), text=translated_text.text, fill=(255,255,255), font = font_type)
 image.show()
