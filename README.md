@@ -1,2 +1,2 @@
-# ShellHacks-Repo
+# Santi is ugly
 ShellHacks Project coming soon
