@@ -1,5 +1,5 @@
 # Shell Hacks Project
-Find text from any image and translate it to user's primary language of choice(Particularly a menu)
+Find text from any image and translate it to user's primary language of choice (Particularly a restaurant menu)
 
 # Applications Used
 API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Programming Language: Python
@@ -23,4 +23,10 @@ API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Pro
  - When choosing API pick Cloud Vision API, then select 'No im not using them both' (Unless you do)
  - Create your own service name and set role to Project -> owner, and then pick JSON
  - 
-
+ 
+ ### To run:
+ - Download the associated files in this repository
+ - Rename your .json file to "menuTranslatorAuthentication.json". This is for consistency's sake
+ - In Anaconda, select the environment you created earlier and press the green triangle
+ - Press "Open Terminal"
+ - In your terminal, type "python main.py"
