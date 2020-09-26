@@ -2,12 +2,15 @@ import io
 import os
 import googletrans
 
-# Imports the Google Cloud client library and googletranslate api
+#Pillow Library that allows for image manipulation
+from PIL import Image, ImageDraw, ImageFont
+
+# Imports the Google Cloud client library
 from google.cloud import vision
 from google.cloud.vision import types
 from googletrans import Translator
 
-#set translator object so we can translate text
+
 translator = Translator()
 #sets up GOOGLE_APPLICATION_CREDENTIALS 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'menuTranslatorAuthentication.json'
@@ -33,12 +36,19 @@ print('Labels:')
 for label in labels:
     print(label.description)
     text.write(label.description + "\n")
-#read test file to translate from language A to language B
+
 text = open("test.txt","r")
 
-#Translate to spanish to see if it works, this is based off the cat example image they gave us
 print('\n')
 print('Translated Version: ')
 text_contents = text.read()
 translated_version = translator.translate(text_contents, dest ='spanish')
 print(translated_version.text)
+
+image = Image.open('wakeupcat.jpg')
+#Download a font to use
+#font_type = ImageFont.truetype('', 18)
+
+draw = ImageDraw.Draw(image)
+draw.text(xy=(25,25),text="BIG FAT CAT", fill=(255,0,0),font=font_type)
+image.show()
