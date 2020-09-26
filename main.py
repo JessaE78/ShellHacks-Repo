@@ -3,7 +3,7 @@ import os
 import googletrans
 
 #Pillow Library that allows for image manipulation
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # Imports the Google Cloud client library
 from google.cloud import vision
@@ -13,7 +13,7 @@ from googletrans import Translator
 
 translator = Translator()
 #sets up GOOGLE_APPLICATION_CREDENTIALS 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'menuTranslatorAuthentication.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'shell_hacks.json'
 
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
@@ -47,8 +47,13 @@ print(translated_version.text)
 
 image = Image.open('wakeupcat.jpg')
 #Download a font to use
-#font_type = ImageFont.truetype('', 18)
+
+cropped_image = image.crop((30,390,580,470))
+blurred_image = cropped_image.filter(ImageFilter.GaussianBlur(radius=8))
+image.paste(blurred_image,(30,390,580,470))
+
+font_type = ImageFont.truetype('Arial Bold.ttf', 48)
 
 draw = ImageDraw.Draw(image)
-draw.text(xy=(25,25),text="BIG FAT CAT", fill=(255,0,0),font=font_type)
+draw.text(xy=(150,400),text="BIG FAT CAT", fill=(255,0,0),font=font_type)
 image.show()
