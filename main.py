@@ -17,7 +17,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'menuTranslatorAuthentication.js
 client = vision.ImageAnnotatorClient()
 
 # The name of the image file to annotate
-file_name = os.path.abspath('resources/menu_test_1.jpg')
+file_name = os.path.abspath('resources/italian_menu_test.jpg')
 
 # Loads the image into memory
 with io.open(file_name, 'rb') as image_file:
@@ -26,38 +26,45 @@ with io.open(file_name, 'rb') as image_file:
 image = types.Image(content=content)
 
 # Performs label detection on the image file
-response = client.label_detection(image=image)
-labels = response.label_annotations
-
-text_response = client.text_detection(image=image)
-text_anno = text_response.text_annotations
-locale = text_anno[0].locale
+text_anno = client.text_detection(image=image).text_annotations
+with open('test.txt', 'w', encoding = 'utf-8') as f:
+    f.write(str(text_anno))
 separated_text = text_anno[0].description.split('\n')
-separated_text.pop()
+separated_text.pop() #Get rid of last element, which is nothing
 
-temp_counter = 1
-text_dict = {}
+text_index = 1
 #for text in separated_text:
 
-image = Image.open('resources/menu_test_1.jpg')
+translated = translator.translate(text_anno[0].description, src = text_anno[0].locale, dest = 'es')
+translated_text_separated = translated.text.split('\n')
+image = Image.open(file_name)
 draw = ImageDraw.Draw(image)
-for text in separated_text:
-    text_len = len(text.split(' '))
-    text_dict[text] = temp_counter
-    temp_counter += text_len
+#print(translated_text_separated)
+for i in range(len(separated_text)):
+    #Get the number of words
+    text_num_words = len(separated_text[i].split(' '))
+    #print(text_num_words)
 
-    print(text)
-    translated_text = translator.translate(text, src = locale, dest = 'es')
-    index = text_dict[text]
-    print(index)
-    verts_first_word = text_anno[index].bounding_poly.vertices
-    verts_last_word = text_anno[index + text_len - 1].bounding_poly.vertices
-
+    #Get the verticies of the first and last word of the portion being translated
+    verts_first_word = text_anno[text_index].bounding_poly.vertices
+    verts_last_word = text_anno[text_index + text_num_words - 1].bounding_poly.vertices
+    #Crop and blur portion that's being translated
     cropped_img = image.crop((verts_first_word[0].x,verts_first_word[0].y,verts_last_word[2].x,verts_last_word[2].y))
-    blurred_img = cropped_img.filter(ImageFilter.GaussianBlur(radius=8))
-    image.paste(blurred_img, (verts_first_word[0].x,verts_first_word[0].y,verts_last_word[2].x,verts_last_word[2].y))
+    #blurred_img = cropped_img.filter(ImageFilter.GaussianBlur(radius=8))
+    image.paste(cropped_img, (verts_first_word[0].x,verts_first_word[0].y))
 
-    font_type = ImageFont.truetype('fonts/times.ttf', verts_last_word[2].y - verts_first_word[0].y)
-    draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y), text=translated_text.text, fill=(255,255,255), font = font_type)
+    #Set font size to the size of original text
+    font_type = ImageFont.truetype('fonts/times.ttf', verts_last_word[2].y - verts_first_word[0].y + 1)
+    #Draw outline of text
+    draw.text(xy = (verts_first_word[0].x - 1, verts_first_word[0].y), text=translated_text_separated[i], fill=(0,0,0), font = font_type)
+    draw.text(xy = (verts_first_word[0].x + 1, verts_first_word[0].y), text=translated_text_separated[i], fill=(0,0,0), font = font_type)
+    draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y - 1), text=translated_text_separated[i], fill=(0,0,0), font = font_type)
+    draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y + 1), text=translated_text_separated[i], fill=(0,0,0), font = font_type)
+    #Write translated text
+    draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y), text=translated_text_separated[i], fill=(255,255,255), font = font_type)
+
+    text_index += text_num_words
+
+print("Finished")
 image.show()
 
