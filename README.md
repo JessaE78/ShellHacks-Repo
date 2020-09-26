@@ -1,2 +1,2 @@
-# Santi is ugly
+# Santi is ugly Ok dood
 ShellHacks Project coming soon
