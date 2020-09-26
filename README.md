@@ -1,13 +1,13 @@
 # Shell Hacks Project
 Find text from any image and translate it to user's primary language of choice(Particularly a menu)
-# What we used
-We used google cloud vision api as well as google's translator api.
-We also used Anaconda for our environment and used python for our programming language
+
+# Applications Used
+API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Programming Language: Python
 
 # Instructions
 ## What do you need?
 ### Anaconda + Python
-- Anacaonda Navigator/Prompt (Your choice)
+- Anaconda Navigator/Prompt (Your choice)
  -Download Anaconda here [https://www.anaconda.com/products/individual]
  - Work environment with Python 3.5 >=
   -Follow these instructions to set up an environment [https://www.geeksforgeeks.org/set-up-virtual-environment-for-python-using-anaconda/]

@@ -13,7 +13,6 @@ from googletrans import Translator
 translator = Translator()
 #sets up GOOGLE_APPLICATION_CREDENTIALS 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'menuTranslatorAuthentication.json'
-
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
 
@@ -61,3 +60,4 @@ for text in separated_text:
     font_type = ImageFont.truetype('fonts/times.ttf', verts_last_word[2].y - verts_first_word[0].y)
     draw.text(xy = (verts_first_word[0].x, verts_first_word[0].y), text=translated_text.text, fill=(255,255,255), font = font_type)
 image.show()
+
