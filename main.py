@@ -52,7 +52,7 @@ cropped_image = image.crop((30,390,580,470))
 blurred_image = cropped_image.filter(ImageFilter.GaussianBlur(radius=8))
 image.paste(blurred_image,(30,390,580,470))
 
-font_type = ImageFont.truetype('Arial Bold.ttf', 48)
+font_type = ImageFont.truetype('Arial.ttf', 48)
 
 draw = ImageDraw.Draw(image)
 draw.text(xy=(150,400),text="BIG FAT CAT", fill=(255,0,0),font=font_type)
