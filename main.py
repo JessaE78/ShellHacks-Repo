@@ -13,7 +13,7 @@ from googletrans import Translator
 
 translator = Translator()
 #sets up GOOGLE_APPLICATION_CREDENTIALS 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'shell_hacks.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'MenuTranslator.json'
 
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
