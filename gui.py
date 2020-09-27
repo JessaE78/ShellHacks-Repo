@@ -11,14 +11,12 @@ window = Tk()
 window.geometry("500x500")
 window.title("Menu Translator")
 
-
 lang_tuple = []
 for lang in LANGUAGES.values():
     lang_tuple.append(lang.capitalize())
 lang_tuple = tuple(lang_tuple)
 
 image = None
-translated_img = None
 lang_code = "en"
 use_pronunciation = BooleanVar()
 use_pronunciation.set(False)
@@ -31,12 +29,7 @@ def UploadAction(event=None):
     print('Selected:', image.name)
 
 def Translate():
-    global canvas
-    global translated_img
     translated_img = translate_image(image, lang_code, use_pronunciation.get())
-    img = ImageTk.PhotoImage(translated_img)
-    canvas.create_image(100,100,anchor=NW, image = img)
-    canvas.pack()
     translated_img.show()
 
 def set_lang(lang):
@@ -51,8 +44,6 @@ clicked = StringVar()
 clicked.set("English")
 drop = OptionMenu(window, clicked, *lang_tuple, command = set_lang)
 drop.pack()
-
-canvas = Canvas(window, width = 100, height = 100)
 
 label1 = Label(window, text="Welcome to our Menu Translator!", font=("arial", 16, "bold"))
 label1.pack()
