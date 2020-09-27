@@ -1,5 +1,5 @@
-# Shell Hacks Project
-Find text from any image and translate it to user's primary language of choice (Particularly a restaurant menu)
+# Limited Languaged Translator Project(Shell Hacks)
+Find text from any image and translate it to user's primary language of choice (Example: restaurant menu)
 
 # Applications Used
 API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Programming Language: Python
@@ -22,11 +22,25 @@ API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Pro
  - Click 'Enable API' and then click on 'Create Credentials' 
  - When choosing API pick Cloud Vision API, then select 'No im not using them both' (Unless you do)
  - Create your own service name and set role to Project -> owner, and then pick JSON
- - 
- 
+ - Put Json file with the rest of your files
+ - Rename your .json file to "menuTranslatorAuthentication.json". This is for consistency's sake
+ - Now make sure your billing for the project is enabled 
+ ### Google Cloud SDK
+ - Follow the instructions to download and use Google Cloud CDK [https://cloud.google.com/sdk/docs/quickstart]
+ - At the project selection, choose the project that has the Vision API Json, so the project you just created
+ - Once done with that follow these instructions to make sure you did everything correct [https://cloud.google.com/vision/docs/setup#windows]
  ### To run:
  - Download the associated files in this repository
- - Rename your .json file to "menuTranslatorAuthentication.json". This is for consistency's sake
  - In Anaconda, select the environment you created earlier and press the green triangle
  - Press "Open Terminal"
- - In your terminal, type "python main.py"
+ - Find the location of your folder and go to it cd (path to your folder)
+ - In your terminal, type "python gui.py"
+ - Select the language you want to translate to
+ - Select the image you want to be translated
+ - Click on translate
+ - Finish!
+ 
+ 
+ ## Comments
+First attempt at trying to translate image text to another language based on user request, thank you shellhacks, and google!
+
