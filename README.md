@@ -1,4 +1,4 @@
-# Limited Languaged Translator Project(Shell Hacks)
+# Menu Translator Project(Shell Hacks)
 Find text from any image and translate it to user's primary language of choice (Example: restaurant menu)
 
 # Applications Used
