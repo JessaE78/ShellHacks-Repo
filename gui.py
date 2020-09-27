@@ -2,13 +2,15 @@
 from tkinter import *
 from main import translate_image
 from lang_code import *
+# from PIL import ImageTik, Image
 import os
 import sys
 import shutil
 
 window = Tk()
 window.geometry("500x500")
-window.title("Menu Translator")
+window.title("Translator")
+window.configure(bg="darkorchid1")
 
 
 lang_tuple = []
@@ -40,15 +42,16 @@ def set_use_pronunciation(val):
 
 clicked = StringVar()
 clicked.set("English")
-drop = OptionMenu(window, clicked, *lang_tuple, command = set_lang)
-drop.pack()
+drop = OptionMenu(window, clicked, *lang_tuple, command = set_lang).place(x=206, y=300)
+#drop.pack()
 
-label1 = Label(window, text="Welcome to our Menu Translator!", font=("arial", 16, "bold")).pack()
-label2 = Label(window, text="Please upload a picture of the menu you want translated", font=("arial", 10)).pack()
+label1 = Label(window, text="Welcome to our Translator!", font=("arial", 16, "bold")).pack()
+label2 = Label(window, text="Please upload a picture you want translated", font=("Helvetica", 10)).pack()
 
-pronunciation = Checkbutton(window, text="Show Pronunciation Instead", variable=use_pronunciation, onvalue = True, offvalue = False).pack()
+pronunciation = Checkbutton(window, text="Show Pronunciation Instead", variable=use_pronunciation, onvalue = True, offvalue = False).place(x=160, y=365)
 
-buttonUpload = Button(window, text='Open', command=UploadAction).pack()
-button1 = Button(window, text = "Translate", command=Translate).pack()
+buttonUpload = Button(window, text='Open', command=UploadAction).place(x=230, y=80)
+label3 = Label(window, text="Select the language you want your picture to be translated to").place(x=100, y=270)
+button1 = Button(window, text = "Translate", command=Translate, bg="orchid1", fg="white").place(x=220, y=330)
 
 window.mainloop()
