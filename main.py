@@ -65,9 +65,9 @@ def translate_image(image_file, dest_lang, do_pronunciation):
     translated = translator.translate(text_to_translate, src = text_anno.text_annotations[0].locale, dest = dest_lang)
     translated_text_separated = translated.text.split('@')
     translated_text_separated.pop()
-    pronunciation = translated.extra_data["translation"][len(translated.extra_data["translation"]) - 1][3]
-    pronunciation_separated = ""
     if (pronunciation != None):
+        pronunciation = translated.extra_data["translation"][len(translated.extra_data["translation"]) - 1][3]
+        pronunciation_separated = ""
         pronunciation_separated = pronunciation.split('@')
         pronunciation_separated.pop()
     else:
