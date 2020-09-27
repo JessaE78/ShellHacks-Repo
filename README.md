@@ -14,7 +14,7 @@ API: Google Cloud Vision and Google Translator --  Environment: Anaconda  -- Pro
  - Python libraries: googletrans, pillow, google-cloud-vision
   -In your environment terminal either do "pip install 'python library'" or "conda install 'python library'" follow these instructions for help [https://docs.anaconda.com/anaconda/user-guide/tasks/install-packages/], [https://datatofish.com/how-to-install-python-package-in-anaconda/]
   
- ### Google Cloud
+ ### Google Cloud Visual API
 - A google cloud account with a project and google cloud vision API enabled and authenticated
  - Create  a google cloud account(https://cloud.google.com) go to "Console" in the top right corner of the screen
  - Create a project, name it based whatever suites you
