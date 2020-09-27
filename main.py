@@ -66,8 +66,13 @@ def translate_image(image_file, dest_lang, do_pronunciation):
     translated_text_separated = translated.text.split('@')
     translated_text_separated.pop()
     pronunciation = translated.extra_data["translation"][len(translated.extra_data["translation"]) - 1][3]
-    pronunciation_separated = pronunciation.split('@')
-    pronunciation_separated.pop()
+    pronunciation_separated = ""
+    if (pronunciation != None):
+        pronunciation_separated = pronunciation.split('@')
+        pronunciation_separated.pop()
+    else:
+        print("Pronunciation set to false because there is no available pronunciation")
+        do_pronunciation = False
 
     image = Image.open(image_file)
     draw = ImageDraw.Draw(image)
@@ -80,7 +85,6 @@ def translate_image(image_file, dest_lang, do_pronunciation):
         cropped_img = image.crop((top_left_vert.x,top_left_vert.y,bot_right_vert.x,bot_right_vert.y))
         blurred_img = cropped_img.filter(ImageFilter.GaussianBlur(radius=8))
         image.paste(blurred_img, (top_left_vert.x,top_left_vert.y))
-        print(i)
         #Set font size to the size of original text
         font_type = ImageFont.truetype('fonts/ARIALUNI.ttf', text_sizes[i])
         if do_pronunciation:
