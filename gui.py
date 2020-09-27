@@ -58,8 +58,5 @@ buttonUpload = Button(window, text='Open', command=UploadAction).place(x=230, y=
 
 label3 = Label(window, text="Select the language you want your picture to be translated to").place(x=100, y=270)
 button1 = Button(window, text = "Translate", command=Translate, bg="orchid1", fg="white").place(x=220, y=330)
-button1.pack()
-
-
 
 window.mainloop()
